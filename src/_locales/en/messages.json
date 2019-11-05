@@ -51,6 +51,7 @@
     "lblSentence": { "message": "Sentence" },
     "lblUrl": { "message": "URL" },
     "lblAudio": { "message": "Audio" },
+    "lblExamples": { "message": "Examples" },
 
     "lblUdfScripts": { "message": "Script Name" },
     "lblSysScripts": { "message": "Script Name" },

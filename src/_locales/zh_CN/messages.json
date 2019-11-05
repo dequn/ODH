@@ -49,6 +49,7 @@
     "lblSentence": { "message": "原句笔记" },
     "lblUrl": { "message": "来源网址" },
     "lblAudio": { "message": "音频文件" },
+    "lblExamples": { "message": "例句" },
 
     "lblUdfScripts": { "message": "自选脚本名称" },
     "lblSysScripts": { "message": "系统脚本名称" },

@@ -87,10 +87,32 @@ class ODHBack {
             tags: ['ODH']
         };
 
-        let fieldnames = ['expression', 'reading', 'extrainfo', 'definition', 'definitions', 'sentence', 'url'];
+        let fieldnames = ['expression', 'reading', 'extrainfo', 'definition', 'definitions', 'sentence', 'url', 'examples'];
         for (const fieldname of fieldnames) {
             if (!options[fieldname]) continue;
             note.fields[options[fieldname]] = notedef[fieldname];
+        }
+
+        // remove style tag
+        var definition = note.fields[options['definition']];
+        definition = definition.substring(definition.indexOf('</style>') + 8);
+
+        // extract example sentences
+        var reg = /<ul class="sents">(.+?)<\/ul>/;
+        var examples = reg.exec(note.fields[options['definition']]);
+        note.fields[options['definition']] = definition.replace(reg, "");
+
+        if (examples != null) {
+            var sentences = examples[1];
+            var reg2 = /<li class='sent'>(.+?)<\/li>/;
+            var res = sentences.match(reg2);
+
+            var l = [];
+            for (const r of res) {
+                var stripReg = /<[^>b]+>/g;
+                l.push(r.replace(stripReg, ""));
+            }
+            note.fields[options['examples']] = l.join("<br/>");
         }
 
         if (options.audio && notedef.audios.length > 0) {

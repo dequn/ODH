@@ -104,7 +104,7 @@ class ODHBack {
 
         if (examples != null) {
             var sentences = examples[1];
-            var reg2 = /<li class='sent'>(.+?)<\/li>/;
+            var reg2 = /<li class='sent'>(.+?)<\/li>/g;
             var res = sentences.match(reg2);
 
             var l = [];

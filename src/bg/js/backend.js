@@ -93,6 +93,7 @@ class ODHBack {
             note.fields[options[fieldname]] = notedef[fieldname];
         }
 
+        var stripReg = /<[^>b]+>/g;
         // remove style tag
         var definition = note.fields[options['definition']];
         definition = definition.substring(definition.indexOf('</style>') + 8);
@@ -100,7 +101,7 @@ class ODHBack {
         // extract example sentences
         var reg = /<ul class="sents">(.+?)<\/ul>/;
         var examples = reg.exec(note.fields[options['definition']]);
-        note.fields[options['definition']] = definition.replace(reg, "");
+        note.fields[options['definition']] = definition.replace(reg, "").replace(stripReg, "");
 
         if (examples != null) {
             var sentences = examples[1];
@@ -109,7 +110,6 @@ class ODHBack {
 
             var l = [];
             for (const r of res) {
-                var stripReg = /<[^>b]+>/g;
                 l.push(r.replace(stripReg, ""));
             }
             note.fields[options['examples']] = l.join("<br/>");

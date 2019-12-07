@@ -100,8 +100,10 @@ class ODHBack {
 
         // extract example sentences
         var reg = /<ul class="sents">(.+?)<\/ul>/;
+        // seperate origin and tranlate reg use <br/>
+        var seperateReg = /<span class="chn_tran">|<span class='chn_sent'>/g;
         var examples = reg.exec(note.fields[options['definition']]);
-        note.fields[options['definition']] = definition.replace(reg, "").replace(stripReg, "");
+        note.fields[options['definition']] = definition.replace(reg, "").replace(seperateReg, "<br/>").replace(stripReg, "");
 
         if (examples != null) {
             var sentences = examples[1];
@@ -110,9 +112,9 @@ class ODHBack {
 
             var l = [];
             for (const r of res) {
-                l.push(r.replace(stripReg, ""));
+                l.push(r.replace(seperateReg, "<br/>").replace(stripReg, ""));
             }
-            note.fields[options['examples']] = l.join("<br/>");
+            note.fields[options['examples']] = l.join("<br/><br/>");
         }
 
         if (options.audio && notedef.audios.length > 0) {
